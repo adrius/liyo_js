@@ -1,6 +1,49 @@
 
 
 //INICIO
+// clase siempre en singular
+class Articulo {
+    constructor(nombre, precio, detalles,icono, tipo){
+        this.name= nombre;
+        this.price=precio;
+        this.details=detalles;
+        this.icon= icono;
+        this.type= tipo;
+    }
+}
+//creo array vacio, para despues ingresar los articulos
+//Variables para el pago
+let PagoTotal=0;
+let CantTotal=0;
+
+
+const stock = [];
+//Objeto de clase articulo
+const remera = new Articulo('remera', 1000, 'Remera cuello redondo, color blanco', '👕', 'prenda');
+const gorra= new Articulo('gorra', 1500, 'Gorra de 5 paneles', '🧢', 'accesorio');
+const ilustracion= new Articulo('cuadro', 3000, 'cuadro de Ilustración', '🖼 ', 'otros');
+const pin= new Articulo('Pin', 200, 'Pin metalcio', '👾', 'otros');
+stock.push(remera);
+stock.push(gorra);
+stock.push(ilustracion);
+stock.push(pin);
+console.log(stock);
+
+
+
+
+//filtro por precio
+
+function mayorQue(n){
+    return (art)=> art.price > n;
+}
+
+let mayorQue1000 = mayorQue(1000);
+
+let articulosMayores1000 = stock.filter( mayorQue1000 );
+console.log(articulosMayores1000);
+
+
 
 // INGRESO DE USUARIO
 
@@ -17,63 +60,79 @@ function registroUsuario (){
 
 
 
+//Selección de categoría de producto.
+
+function filtradoPorTipo(tipo) {
+    return (articulo)=> articulo.type.toUpperCase() == tipo.toUpperCase();
+}
+
+
 //SELECCIÓN DE PRODUCTO
 
 function selectArt(){
-    alert('A continuación seleccioná el artículo que deseas adquirir')
-    let articles
-    do{
-        articles = parseInt(prompt('Seleccioná un artículo \n1- Ilustraciones 🖼 \n2- Remeras 👕, \n3- Stickers 👾, \n4- Gorras🧢 '));
-    }while(articles!=1 && articles!=2 && articles!=3 && articles!=4)
+
+    let seleccionTipo = prompt('Elija una categoría:\n-Prenda \n-Accesorio \n-Otros')
     
-switch(articles){
-    case 1:
-    return "Ilustraciones 🖼 ";
-    case 2:
-    return 'Remeras 👕';
-    case 3:
-    return 'Stickers 👾 ';
-    case 4:
-    return 'Gorras🧢 ';
-   } 
+    let filtrado = filtradoPorTipo(seleccionTipo);
+    let stockFiltrado = stock.filter(filtrado);
+
+
+    let listadearticulos = '0- Para salir\n';
+    for( let i = 0; i < stockFiltrado.length; i++) {
+        listadearticulos = listadearticulos + (i + 1) + ' ' + stockFiltrado[i].icon + ' ' + stockFiltrado[i].name +'\n';
+    }
+    
+    
+/*     alert('A continuación seleccioná el artículo que deseas adquirir') */
+    let seleccion;
+    //let articulos = '1- Ilustraciones 🖼 \n2- Remeras 👕, \n3- Stickers 👾, \n4- Gorras🧢 ';
+    do{
+        seleccion = parseInt(prompt('A continuación seleccioná el artículo que deseas adquirir\n-Artículos: \n' + listadearticulos));
+    }while(seleccion<0 || seleccion>stockFiltrado.length+1)
+
+    const posEnArray = seleccion -1;
+    return stockFiltrado[posEnArray];
+    
+
+    return posEnArray;
+    const articuloSeleccionado = stock[posEnArray];
+    return   articuloSeleccionado.name    ;
+
 }
 
 //COMPRA
 
-function importArticle(articles){
-    if(articles==="Ilustraciones 🖼 "){
-        return 1000;
-    }
-    else if(articles==='Remeras 👕'){
-        return 1500;
-    } 
-    else if(articles==='Stickers 👾 '){
-        return 500;
-    } 
-    else if(articles==='Gorras🧢 '){
-        return 900;
-    }
+function importArticle(article){
+    return article.price;
 }
+
+
+//iva
+const CalcularIva = (monto) => monto * 1.21;
+
 
 //COBRAR
 
-function payArticle(item, value){
-    alert('Estás comprando ' +  item + '\nValor:  $' + value);
+function payArticle(){
+    if (PagoTotal <= 0)
+        return;
+
+    alert('Estás comprando ' +  CantTotal + ' artículos \nValor:  $' + PagoTotal);
     let pay = parseInt(prompt('Ingrese el monto con el que abona'));
-    if(pay>value){
-        alert('Muchas gracias!' + '\nSu vuelto es $ ' + (pay - value) +'\nVUELVA PRONTOS!');
-    }else if(pay==value){
+    if(pay>PagoTotal){
+        alert('Muchas gracias!' + '\nSu vuelto es $ ' + (pay - PagoTotal) +'\nVUELVA PRONTOS!');
+    }else if(pay==PagoTotal){
         alert('Gracias por el cambio' +'\nVUELVA PRONTOS!');
 
     }
     else{ 
         alert('El importe ingresado es insuficiente')
         
-    }while(pay<value){
+    }while(pay<PagoTotal){
      pay = parseInt(prompt('Por favor ingrese el monto indicado'));
-     if(pay>value){
-        alert('Muchas gracias!' + '\nSu vuelto es $ ' + (pay - value) +'\nVUELVA PRONTOS!');
-    }else if(pay==value){
+     if(pay>PagoTotal){
+        alert('Muchas gracias!' + '\nSu vuelto es $ ' + (pay - PagoTotal) +'\nVUELVA PRONTOS!');
+    }else if(pay==PagoTotal){
         alert('Gracias por el cambio' +'\nVUELVA PRONTOS!');
 
     }
@@ -87,8 +146,21 @@ function payArticle(item, value){
 
 registroUsuario();
 
-let myArticle = selectArt();
-alert('Seleccionaste ' + myArticle);
-let costArticle = importArticle(myArticle);
-console.log(costArticle);
-payArticle(myArticle, costArticle)
+
+
+let seguircomprando = true;
+do {
+    //
+    let myArticle = selectArt();
+    if (myArticle == undefined) {
+        seguircomprando = false;
+    } else {
+        let costArticle = importArticle(myArticle);
+        PagoTotal= PagoTotal + CalcularIva(costArticle);
+        CantTotal = CantTotal + 1;
+    }
+} while (seguircomprando);
+
+
+
+payArticle();
