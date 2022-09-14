@@ -164,3 +164,31 @@ do {
 
 
 payArticle();
+
+/////DOM
+
+const h2= document.getElementById('h2');
+const parrafo= document.getElementsByClassName('parrafo');
+const ul= document.getElementById('lista')
+
+//console.log(h2.innerHtml);
+//console.log(parrafo[0].innerText="Creando contenido desde JS");
+parrafo[0].innerText="Creando un 2º contenido desde JS";
+parrafo[1].innerText="Creando un 3º contenido desde JS";
+
+parrafo[2].innerHTML="Creando un 3º contenido desde JS";
+//h2
+/* h2.innerText="Marceliyo en JS";
+const articulos=["gorra", "remera", "sticker", "ilustracion"] */
+
+
+for (const articulo of stock) {
+    let li=document.createElement('li');
+    li.innerHTML=`<div class="card">
+    <h3>${articulo.name}</h3>
+    <p>${articulo.price}</p>
+    <p>${articulo.details}</p> </div>` 
+    ul.append(li)
+    
+}
+

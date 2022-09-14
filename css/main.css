@@ -2,13 +2,46 @@
 
 * {
     font-family: 'Helvetica', sans-serif;
+    list-style:none;
 }
 
+body{
+    background-color: #ccc;
+}
+h3{
+    color:darkslateblue;
+
+}
 span {
     font-family: 'Anton', sans-serif;
-
     letter-spacing: 5px;
     background-color: #e0ff00;
     padding: 0  0.4rem;
     font-style: italic;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: white;
+}
+
+.card {
+    margin: 20px;
+    padding: 10px;
+    max-width: 250px;
+    border: .0625rem solid #ccc;
+    border-radius: .5rem;
+    background-color: white;
+   /*  -webkit-box-shadow: 21px 18px 8px -23px rgba(114, 114, 115, 1);
+    -moz-box-shadow: 21px 18px 8px -23px rgba(114, 114, 115, 1);
+    box-shadow: 21px 18px 8px -23px rgba(114, 114, 115, 1); */
+}
+
+.card img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: .5rem;
 }
