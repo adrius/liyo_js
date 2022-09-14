@@ -1,9 +1,8 @@
-
-
 //INICIO
-// clase siempre en singular
+// Declaracion de la clase
 class Articulo {
-    constructor(nombre, precio, detalles,icono, tipo){
+    constructor(id, nombre, precio, detalles,icono, tipo){
+        this.id=id;
         this.name= nombre;
         this.price=precio;
         this.details=detalles;
@@ -11,184 +10,228 @@ class Articulo {
         this.type= tipo;
     }
 }
-//creo array vacio, para despues ingresar los articulos
+
 //Variables para el pago
 let PagoTotal=0;
 let CantTotal=0;
 
-
+//creo array vacio, para despues ingresar los articulos
 const stock = [];
+
 //Objeto de clase articulo
-const remera = new Articulo('remera', 1000, 'Remera cuello redondo, color blanco', '👕', 'prenda');
-const gorra= new Articulo('gorra', 1500, 'Gorra de 5 paneles', '🧢', 'accesorio');
-const ilustracion= new Articulo('cuadro', 3000, 'cuadro de Ilustración', '🖼 ', 'otros');
-const pin= new Articulo('Pin', 200, 'Pin metalcio', '👾', 'otros');
+const remera = new Articulo(1,'Remera', 1000, 'Remera cuello redondo, color blanco', '👕', 'prenda');
+const gorra= new Articulo(2,'Gorra', 1500, 'Gorra de 5 paneles', '🧢', 'accesorio');
+const ilustracion= new Articulo(3, 'Cuadro', 3000, 'cuadro de Ilustración', '🖼 ', 'otros');
+const pin= new Articulo(4,'Pin', 200, 'Pin metalcio', '👾', 'otros');
 stock.push(remera);
 stock.push(gorra);
 stock.push(ilustracion);
 stock.push(pin);
-console.log(stock);
 
+const containerDiv= document.querySelector(".container");
+const carritoDiv = document.querySelector(".carrito");
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-
-
-//filtro por precio
-
-function mayorQue(n){
-    return (art)=> art.price > n;
-}
-
-let mayorQue1000 = mayorQue(1000);
-
-let articulosMayores1000 = stock.filter( mayorQue1000 );
-console.log(articulosMayores1000);
-
-
-
-// INGRESO DE USUARIO
-
-function registroUsuario (){ 
-    alert('Hola! a continuación por favor ingresá tu nombre');  
-    let usuario = prompt('Ingresá tu nombre');
-    while((!isNaN(usuario))){
-    alert('Debes ingresar un nombre en caracteres');
-    usuario = prompt('Ingresá nuevamente tu nombre');
-}
-    alert('Bienvenido ' + usuario + ' cómo estas?');
+//Listado
+function Listado(){
+    Articulo.forEach(element=>{
+        containerDiv.innerHTML += `<div style="background-color:yellow;">
+        <h4>${element.name}</h4>
+        <h3>${element.price}</h3>
+        <button class="btnCarrito" id="btn-agregar${element.id}">Agregar</button>
+        </div>`
+    })
 }
 
 
 
-
-//Selección de categoría de producto.
-
-function filtradoPorTipo(tipo) {
-    return (articulo)=> articulo.type.toUpperCase() == tipo.toUpperCase();
+function MostrarError(mensaje) {
+    const elementAreaDeMensajes = document.getElementById("area-de-mensajes");
+    elementAreaDeMensajes.innerText = mensaje;
 }
-
-
-//SELECCIÓN DE PRODUCTO
-
-function selectArt(){
-
-    let seleccionTipo = prompt('Elija una categoría:\n-Prenda \n-Accesorio \n-Otros')
-    
-    let filtrado = filtradoPorTipo(seleccionTipo);
-    let stockFiltrado = stock.filter(filtrado);
-
-
-    let listadearticulos = '0- Para salir\n';
-    for( let i = 0; i < stockFiltrado.length; i++) {
-        listadearticulos = listadearticulos + (i + 1) + ' ' + stockFiltrado[i].icon + ' ' + stockFiltrado[i].name +'\n';
-    }
-    
-    
-/*     alert('A continuación seleccioná el artículo que deseas adquirir') */
-    let seleccion;
-    //let articulos = '1- Ilustraciones 🖼 \n2- Remeras 👕, \n3- Stickers 👾, \n4- Gorras🧢 ';
-    do{
-        seleccion = parseInt(prompt('A continuación seleccioná el artículo que deseas adquirir\n-Artículos: \n' + listadearticulos));
-    }while(seleccion<0 || seleccion>stockFiltrado.length+1)
-
-    const posEnArray = seleccion -1;
-    return stockFiltrado[posEnArray];
-    
-
-    return posEnArray;
-    const articuloSeleccionado = stock[posEnArray];
-    return   articuloSeleccionado.name    ;
-
-}
-
-//COMPRA
-
-function importArticle(article){
-    return article.price;
-}
-
-
-//iva
-const CalcularIva = (monto) => monto * 1.21;
 
 
 //COBRAR
 
 function payArticle(){
     if (PagoTotal <= 0)
+    {
+        MostrarError("No hay nada para pagar!");
         return;
+    }
 
-    alert('Estás comprando ' +  CantTotal + ' artículos \nValor:  $' + PagoTotal);
-    let pay = parseInt(prompt('Ingrese el monto con el que abona'));
-    if(pay>PagoTotal){
-        alert('Muchas gracias!' + '\nSu vuelto es $ ' + (pay - PagoTotal) +'\nVUELVA PRONTOS!');
-    }else if(pay==PagoTotal){
-        alert('Gracias por el cambio' +'\nVUELVA PRONTOS!');
 
-    }
-    else{ 
-        alert('El importe ingresado es insuficiente')
-        
-    }while(pay<PagoTotal){
-     pay = parseInt(prompt('Por favor ingrese el monto indicado'));
-     if(pay>PagoTotal){
-        alert('Muchas gracias!' + '\nSu vuelto es $ ' + (pay - PagoTotal) +'\nVUELVA PRONTOS!');
-    }else if(pay==PagoTotal){
-        alert('Gracias por el cambio' +'\nVUELVA PRONTOS!');
+    // Meter en una variable el monto con el que el usuario paga
+    const elementoPagaCon = document.getElementById("pagaConCantidad");
+    const pagaCon = elementoPagaCon.valueAsNumber;
 
+    // Calcular el cambio
+    const cambio = pagaCon - PagoTotal;
+
+    if (cambio < 0) {
+        MostrarError("No te alcanza!");
+        return;
     }
-    }
-    }
+
+    // tomar el nombre del usuario
+    const elementNombre = document.getElementById("nombre");
+
+
+    // Mostrar el cambio en pantalla
+    const elementoCambio = document.getElementById("cambio");
+    elementoCambio.innerText = `$ ${cambio}, gracias por su compra, ${elementNombre.value}`;
 
     
+   
+}
 
+    
+// Agrego elementos dinamicamente a la tabla de producto
+function MostrarProductos() {
+
+
+    const productos = document.getElementById("productos");
+
+   
+    for( let i = 0; i < stock.length; i++) {
+
+        const articulo = stock[i];
+
+
+        // La fila (TR)
+        let fila = document.createElement("tr");
+
+        // Las celdas de datos (TD)
+        let columnaProducto = document.createElement("td");
+        let columnaTipo = document.createElement("td");
+        let columnaArticulo = document.createElement("td");
+        let columnaPrecio = document.createElement("td");
+
+
+        columnaProducto.innerHTML = (i + 1).toString();
+        columnaProducto.className = "articulo-celda";
+
+        columnaTipo.innerHTML = articulo.type;
+        columnaTipo.className = "articulo-celda";
+
+        columnaArticulo.innerHTML = articulo.details;
+        columnaArticulo.className = "articulo-celda";
+ 
+        columnaPrecio.innerHTML = articulo.price;
+        columnaPrecio.className = "articulo-celda";
+
+        fila.className = "articulo-fila";
+        fila.append(columnaProducto);
+        fila.append(columnaTipo);
+        fila.append(columnaArticulo);
+        fila.append(columnaPrecio);
+        
+        productos.append(fila);
+    }
+}
+
+
+function teclaPresionada(e) {
+
+    if (e.code == "Enter") {
+        const elegirProducto = document.getElementById("elegir-producto");
+        const seleccion = elegirProducto.valueAsNumber - 1;
+        if (seleccion > stock.length)
+        {
+            MostrarError("los productos van de 1 a " + String(stock.length));
+            return;
+        }
+
+        const articuloSeleccionado = stock[seleccion];
+        agregarAlCarrito(articuloSeleccionado);
+        PagoTotal += articuloSeleccionado.price;
+        ActualizarTotal(PagoTotal);
+    }
+}
+
+// agrega un articulo al carrito
+
+function agregarAlCarrito(Articulo){
+    let existente = carrito.some(art=>art.id === Articulo.id);
+    if (existente === false){
+     Articulo.cantidad = 1;
+     carrito.push(Articulo);
+    }
+    else{
+        let artFind = carrito.find(art => art.id === Articulo.id);
+        artFind.cantidad++;
+    }
+    console.log(carrito);
+    mostrarCarrito();
+
+}
+function mostrarCarrito(){
+    carritoDiv.innerHTML="";
+    carrito.forEach(art => {
+        carritoDiv.innerHTML += `<div>
+        <h4>${art.name}</h4>
+        <h3>Cantidad: ${art.cantidad}</h3>
+        <p>$ ${art.price}</p>
+        <button class="btnCarrito" id="btn-borrar${art.name}">Borrar</button>
+        <button class="btnCarrito" id="btn-borrarUnidad${art.name}">Borrar x1</button>
+        </div>`
+    })
+    agregarEventoBorrarArticulo();
+    RecalcularTotal();
+    localStorage.setItem("carrito",JSON.stringify(carrito));
+}
+
+function RecalcularTotal() {
+    PagoTotal = 0;
+    for (const articulo of carrito) {
+        PagoTotal += articulo.cantidad * articulo.price;
+    }
+    ActualizarTotal(PagoTotal);
+}
+
+
+function agregarEventoBorrarArticulo(){
+
+    carrito.forEach(articulo=>{
+        document.querySelector(`#btn-borrar${articulo.name}`).addEventListener("click", ()=>{
+            let indice= carrito.findIndex(element=>element.id===articulo.id);
+            carrito.splice(indice,1);
+            mostrarCarrito();
+        })
+    })
+
+
+    carrito.forEach(articulo=>{
+        document.querySelector(`#btn-borrarUnidad${articulo.name}`).addEventListener("click", ()=>{
+            let indice= carrito.findIndex(element=>element.id===articulo.id);
+            carrito[indice].cantidad = carrito[indice].cantidad - 1;
+            if (carrito[indice].cantidad == 0)
+            {
+                carrito.splice(indice,1);
+            }
+
+            mostrarCarrito();
+        })
+    })
+}
+mostrarCarrito();
+
+//
+
+function ActualizarTotal(nuevoTotal) {
+    const elementoTotal = document.getElementById("total");
+    elementoTotal.innerHTML = `$ ${nuevoTotal}`;
+}
 
 //LLAMADOS
 
-registroUsuario();
+MostrarProductos();
+
+const elegirProducto = document.getElementById("elegir-producto");
+elegirProducto.addEventListener("keypress", teclaPresionada );
 
 
+const botonPagar = document.getElementById("pagar");
+botonPagar.addEventListener("click", payArticle );
 
-let seguircomprando = true;
-do {
-    //
-    let myArticle = selectArt();
-    if (myArticle == undefined) {
-        seguircomprando = false;
-    } else {
-        let costArticle = importArticle(myArticle);
-        PagoTotal= PagoTotal + CalcularIva(costArticle);
-        CantTotal = CantTotal + 1;
-    }
-} while (seguircomprando);
-
-
-
-payArticle();
-
-/////DOM
-
-const h2= document.getElementById('h2');
-const parrafo= document.getElementsByClassName('parrafo');
-const ul= document.getElementById('lista')
-
-//console.log(h2.innerHtml);
-//console.log(parrafo[0].innerText="Creando contenido desde JS");
-parrafo[0].innerText="Creando un 2º contenido desde JS";
-parrafo[1].innerText="Creando un 3º contenido desde JS";
-
-parrafo[2].innerHTML="Creando un 3º contenido desde JS";
-//h2
-/* h2.innerText="Marceliyo en JS";
-const articulos=["gorra", "remera", "sticker", "ilustracion"] */
-
-
-for (const articulo of stock) {
-    let li=document.createElement('li');
-    li.innerHTML=`<div class="card">
-    <h3>${articulo.name}</h3>
-    <p>${articulo.price}</p>
-    <p>${articulo.details}</p> </div>` 
-    ul.append(li)
-    
-}
 
