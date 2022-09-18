@@ -1,0 +1,48 @@
+<body>
+    <h1>Desafío: Incorporar eventos - Campogrande Marcelo.</h1>
+    <hr />
+    <h2 id="h2"></h2>
+    <h3>Java Script</h3>
+
+    <div id="area-de-mensajes" class="msg"></div>
+    
+    <div>
+      Lista de Precios
+
+      <div class="container"></div>
+      <div class="carrito"></div>
+
+
+      <table id="productos" class="productos">
+        <th class="articulo-fila">Producto</th>
+        <th class="articulo-fila">Tipo</th>
+        <th class="articulo-fila">Articulo</th>
+        <th class="articulo-fila">Precio</th>
+      </table>
+
+
+      <p>
+        <label for="elegir-producto">Agregar producto</label>
+        <input id="elegir-producto" type="number">
+      </p>
+   </div>
+    
+    <div id="total">$ 0</div>
+    
+    <div>
+      <div>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre">
+      </div>
+
+      <div>
+        <label for="pagaConCantidad">Paga con: $</label>
+        <input id="pagaConCantidad" type="number">
+      </div>
+      <button id="pagar">Pagar!</button>
+      <p>Su cambio es:<div id="cambio"></div></p>
+      
+    </div>
+
+    <script src="./js/main.js"></script>
+  </body>
