@@ -1,7 +1,7 @@
 function dibujarProductos(productos){
     // Tomar una referencia del elemento contenedor
-    // El elecmento contenedor se usa para poder agregarle los nuevos elementos que vamos a crear
-    // Crearemos tantos elementos como productos haya en el array de stock[]
+    // El elemento contenedor se usa para poder agregarle los nuevos elementos que vamos a crear
+    // Crear tantos elementos como productos haya en el array de stock[]
     const contenedor = document.getElementById('contProducto');
 
     // Iterar los productos de a uno
@@ -9,31 +9,34 @@ function dibujarProductos(productos){
 
         // crear un elemento vacio de tipo DIV
         const el = document.createElement('div');
+        
+        // Desestructurar el objeto en varias variables
+        const {id, name, price, details, icon, type, image} = articulo;
 
         // crear el template del producto (individual) remplazando con los valores del articulo
         const templateProducto=`   
         <div class="card" style="width: 18rem;">
-            <img src="${articulo.image}" class="card-img-top " alt="...">
+            <img src="${image}" class="card-img-top " alt="...">
             <div class="card-body ">
-                <p class="card-text">${articulo.name} ${articulo.icon}</p>
-                <p class="card-text"> ${articulo.details} </p>
-                <p class="card-text">$ ${articulo.price} </p>
-                <input id="contador${articulo.id}" class="cantidad" type="number"  value="1" min="0" max="100" step="1">
+                <p class="card-text">${name} ${icon}</p>
+                <p class="card-text"> ${details} </p>
+                <p class="card-text">$ ${price} </p>
+                <input id="contador${id}" class="cantidad" type="number"  value="1" min="0" max="100" step="1">
                 
-                <button id="agregar${articulo.id}" type="button" class="btn btn-dark">Agregar</button>
+                <button id="agregar${id}" type="button" class="btn btn-dark">Agregar</button>
             </div>
         </div>`;
 
-        // asignar el HTML del template, al elemento que vamos a agregar
+        // asignar el HTML del template, al elemento que se va a agregar
         el.innerHTML=templateProducto;
 
         // agregar el elemento a su contenedor
         contenedor.append(el);
 
         // Escuchar el evento CLICK del boton "agregar"
-        const boton=document.getElementById(`agregar${articulo.id}` );
+        const boton=document.getElementById(`agregar${id}` );
         boton.addEventListener("click",()=>{
-            // este codigo se llama cada vez que el usuario clickea en el boton "Agregar" del producto
+            // cada vez que el usuario clickea en el boton "Agregar" del producto
             agregarArticulo(articulo)
         });
     }
@@ -50,8 +53,9 @@ function agregarArticulo(artElegido){
     }
     itemCarrito.quantity+= cantidad;
     refrescarContador();
-    //////Guardo en el storage
-    localStorage.setItem("carrito",JSON.stringify(carrito));
+    
+    // Guardo en la base
+    SalvarCarrito(carrito);
 }
 
 function refrescarContador(){
@@ -109,10 +113,18 @@ function refrescarCarrito(){
             // este codigo se llama cada vez que el usuario cambia la cantidad del carrito
             // tengo que encontrar el carrito[], el articulo que el usuario esta modificando
             // y actualizar la cantidad
+
+            // Busco la posicion en el carrito (el array) que el usuario esta intentando modificar
             const itemAModificar=carrito.find( (itemEnCarrito) => itemEnCarrito.id == item.id );
+
+            // Remplazo la cantidad en el carrito con el valor que el usuario puso en el <input>
             itemAModificar.quantity = e.target.valueAsNumber;
 
+            // Redibujo el carrito
             refrescarCarrito();
+
+            // Salvo en la base de datos
+            SalvarCarrito(carrito);
         });
 
 
@@ -121,10 +133,18 @@ function refrescarCarrito(){
         borrarLineaEl.addEventListener("click", (e)=>{
             // este codigo se llama cada vez que el usuario clickea el boton BORRAR
             // de la linea del carrito
+
+            // Busco la posicion en el carrito (el array) que el usuario esta intentando borrar
             const itemABorrar=carrito.findIndex( (itemEnCarrito) => itemEnCarrito.id == item.id );
+
+            // Borro esa posicion del carrito (el array)
             carrito.splice(itemABorrar, 1);
 
+            // redibujo la pantalla
             refrescarCarrito();
+
+            // Salvo en la base de datos
+            SalvarCarrito(carrito);
         });
 
         

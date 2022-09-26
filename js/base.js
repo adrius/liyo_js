@@ -33,4 +33,20 @@ class ItemCarrito {
     }
 }
 
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+// Leer el carrito desde la base de datos
+// si la base de datos (el storage) no tiene carrito salvado
+// entonces inicializar el carrito con un array vacio = []
+let carrito = LeerCarrito() || [];
+
+
+// "la base de datos"
+// funciones que lean y graben el storage
+function LeerCarrito() {
+    // lee la variable carrito del storage y la devuelve
+    return JSON.parse(localStorage.getItem("carrito"));
+}
+
+function SalvarCarrito(carrito) {
+    // salva en el storage el carrito que recibe como argumento
+    localStorage.setItem("carrito",JSON.stringify(carrito));
+}

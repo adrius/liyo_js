@@ -1,2 +1,2 @@
 dibujarProductos(stock);
-refrescarCarrito();
+refrescarContador();    
