@@ -38,6 +38,9 @@ function dibujarProductos(productos){
         boton.addEventListener("click",()=>{
             // cada vez que el usuario clickea en el boton "Agregar" del producto
             agregarArticulo(articulo)
+            Swal.fire('Se ingresó el artículo a tu carrito')
+            
+
         });
     }
     
@@ -50,6 +53,7 @@ function agregarArticulo(artElegido){
     if(itemCarrito==undefined){
         itemCarrito= new ItemCarrito(artElegido.id, artElegido.name,0,artElegido.price);
         carrito.push(itemCarrito);
+        
     }
     itemCarrito.quantity+= cantidad;
     refrescarContador();
@@ -63,9 +67,12 @@ function refrescarContador(){
 
     for (const item of carrito) { 
         cantidadTotal += item.quantity;
+        
     }
     const alertaEl=document.getElementById("alerta__compra");
     alertaEl.innerHTML=cantidadTotal;
+    
+    
 }
 
 function refrescarCarrito(){
@@ -116,9 +123,12 @@ function refrescarCarrito(){
 
             // Busco la posicion en el carrito (el array) que el usuario esta intentando modificar
             const itemAModificar=carrito.find( (itemEnCarrito) => itemEnCarrito.id == item.id );
+            
 
             // Remplazo la cantidad en el carrito con el valor que el usuario puso en el <input>
             itemAModificar.quantity = e.target.valueAsNumber;
+            
+            
 
             // Redibujo el carrito
             refrescarCarrito();
@@ -126,16 +136,19 @@ function refrescarCarrito(){
             // Salvo en la base de datos
             SalvarCarrito(carrito);
         });
+        
 
 
         // Escuchar el evento click del boton "borrarLinea<X>"
         const borrarLineaEl=document.getElementById(`borrarLinea${item.id}` );
+        
         borrarLineaEl.addEventListener("click", (e)=>{
             // este codigo se llama cada vez que el usuario clickea el boton BORRAR
             // de la linea del carrito
 
             // Busco la posicion en el carrito (el array) que el usuario esta intentando borrar
             const itemABorrar=carrito.findIndex( (itemEnCarrito) => itemEnCarrito.id == item.id );
+            
 
             // Borro esa posicion del carrito (el array)
             carrito.splice(itemABorrar, 1);
@@ -145,6 +158,7 @@ function refrescarCarrito(){
 
             // Salvo en la base de datos
             SalvarCarrito(carrito);
+            
         });
 
         
