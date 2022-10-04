@@ -12,18 +12,27 @@ class Articulo {
     }
 }
 //creo array vacio, para despues ingresar los articulos
-const stock = [];
+let stock = [];
 
 //Objeto de clase articulo
-const remera = new Articulo(1,'Remera', 1000, 'Remera cuello redondo, color blanco', '👕', 'prenda', './assets/img/illus/chicaDj.jpeg');
-const gorra= new Articulo(2,'Gorra', 1500, 'Gorra de 5 paneles', '🧢', 'accesorio','./assets/img/illus/chicaDj.jpeg');
-const ilustracion= new Articulo(3, 'Cuadro', 3000, 'cuadro de Ilustración', '🖼 ', 'otros', './assets/img/illus/chicaDj.jpeg');
-const pin= new Articulo(4,'Pin', 200, 'Pin metalcio', '👾', 'otros', './assets/img/illus/chicaDj.jpeg');
-stock.push(remera);
-stock.push(gorra);
-stock.push(ilustracion);
-stock.push(pin);
+// const remera = new Articulo(1,'Remera', 1000, 'Remera cuello redondo, color blanco', '👕', 'prenda', './assets/img/illus/chicaDj.jpeg');
+// const gorra= new Articulo(2,'Gorra', 1500, 'Gorra de 5 paneles', '🧢', 'accesorio','./assets/img/illus/chicaDj.jpeg');
+// const ilustracion= new Articulo(3, 'Cuadro', 3000, 'cuadro de Ilustración', '🖼 ', 'otros', './assets/img/illus/chicaDj.jpeg');
+// const pin= new Articulo(4,'Pin', 200, 'Pin metalcio', '👾', 'otros', './assets/img/illus/chicaDj.jpeg');
+// stock.push(remera);
+// stock.push(gorra);
+// stock.push(ilustracion);
+// stock.push(pin);
 
+// console.log(JSON.stringify(stock));
+
+
+fetch("./js/data.json")
+.then(response=>response.json())
+.then(data=>{
+    stock = data;
+    render();
+})
 class ItemCarrito {
     constructor(id, name, quantity, price){
         this.id=id;

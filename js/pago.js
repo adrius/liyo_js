@@ -1,2 +1,4 @@
-//
-refrescarCarrito();
+function render() {
+    //
+    refrescarCarrito();
+}

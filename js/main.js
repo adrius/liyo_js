@@ -1,2 +1,5 @@
-dibujarProductos(stock);
-refrescarContador();    
+function render() {
+    dibujarProductos(stock);
+    refrescarContador();    
+}
+
