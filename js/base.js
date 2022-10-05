@@ -27,12 +27,21 @@ let stock = [];
 // console.log(JSON.stringify(stock));
 
 
-fetch("./js/data.json")
+/* fetch("./js/data.json")
 .then(response=>response.json())
 .then(data=>{
     stock = data;
     render();
-})
+}) */
+
+const respuesta = async ()=>{
+    const response = await fetch ('./js/data.json');
+    const data = await response.json();
+    stock = data;
+    render();
+
+}
+respuesta()
 class ItemCarrito {
     constructor(id, name, quantity, price){
         this.id=id;

@@ -104,11 +104,28 @@ footer {
     display: flex;
     
 }
-.subcontainer__illus{
-    width: 80%;
-    background-color: beige;
-    margin-left: 80px;
+.subcontainer__compra{
+    background-color: rgb(247, 247, 176);
+   
+
 }
+.subcontainer__pago{
+    background-color: rgb(247, 247, 176);
+    font-size: xx-large;
+    
+}
+.pago{
+    display: flex;
+    width: 100%;
+    max-width: 1080px;
+    justify-content: end;
+}
+.check{
+    display: flex;
+    flex-direction: row;
+    margin-right: 20px;
+}
+
 
 .cards {
     display: flex;
@@ -120,6 +137,15 @@ footer {
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    margin: 20px;
+    padding: 10px;
+    max-width: 300px;
+    border: .0625rem solid #ccc;
+    border-radius: .5rem;
+    -webkit-box-shadow: 21px 18px 8px -23px rgba(114, 114, 115, 1);
+    -moz-box-shadow: 21px 18px 8px -23px rgba(114, 114, 115, 1);
+    box-shadow: 21px 18px 8px -23px rgba(114, 114, 115, 1);
+    
     
 }
 .card__compra{
@@ -138,7 +164,6 @@ footer {
     background-color: red !important;
     border-radius: 5px;
     opacity: 100% !important;
-    color: white !important;
 
 }
 
@@ -208,10 +233,13 @@ footer {
     margin-top: 0px;
 }
 
-.illustration {
-    /*   background-color: bisque; */
-    /*   width: 100%; */
-    margin-bottom: 90px;
+.SeccionPago {
+    margin-bottom: 40px;
+    justify-content: center;
+    max-width: 1080px;
+    width: 100%;
+    text-align: right;
+    
 }
 
 .container__illus {
@@ -280,10 +308,20 @@ footer {
 
 .btn {
     width: 100%;
+    margin-top: 0px;
+}
+.form-control{
     margin-bottom: 10px;
 }
-
-
+.form-control__contacto{
+    width: 100%;
+    flex-direction: row;
+    width: fit-content;
+}
+/* .form-group{
+    background-color:#;
+}
+ */
 .carousel-inner {
     height: 100%;
     background-color: yellow;
@@ -305,7 +343,17 @@ footer {
     margin-bottom: 20px;
 }
 
-
+.input-examples {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .input-examples>div {
+    flex: 1;
+    min-width: 300px;
+    margin: 1em;
+    background: #ececec;
+    padding: 0.5em;
+  }
 
 /*MEDIA*/
 @media only screen and (max-width: 768px) {

@@ -165,10 +165,16 @@ function refrescarCarrito(){
         
     }
 
-    const alertaEl=document.getElementById("precio_total");
-    alertaEl.innerHTML=costoTotal;
-    
-
+    const alertaEl = document.getElementById("precio_total");
+    alertaEl.innerHTML = "Total: " + "$ " + costoTotal;
 }
+
+// seccion de pago
+
+    
+   
+       
+
+
 
 

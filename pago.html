@@ -25,10 +25,7 @@
 </head>
 
 <body>
-  <h1>Desafío: Incorporar eventos - Campogrande Marcelo.</h1>
-  <hr />
-  <h2 id="h2"></h2>
-  <h3>Java Script</h3>
+
 
   <header>
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -66,20 +63,58 @@
              Detalle de compra. 
           </p>
         </article>
-        
-        <article class="illustration">
-          <div id="contCarrito" class="subcontainer__illus">
-                              
+            
+        <article class="SeccionPago">
+          <div id="contCarrito" class="subcontainer__compra">                 
           </div>   
         </article>
-<div id="precio_total"></div>
+        <article class="SeccionPago">
+          <div id="precio_total" class="subcontainer__pago">
+          </div>
+        </article>
+          <div class="input-examples">
+            <div>
+                <h4>Ingrese sus datos personales</h4>
+                <div class="form-group">
+                    <label ></label>
+                    <input  id="nombre" type="" class="form-control" placeholder="Nombre" >
+                    <input type="" class="form-control" placeholder="Apellido" >
+                    <input type="" id="celular" class="form-control" placeholder="Celular" >
+                    <input  type="email"  class="form-control" id="correoElectronico" 
+                    placeholder="email">
+                  
+                  </div>
+            </div>
+
+            <div>
+                <h4>Ingrese su número de tarjeta</h4>
+                <form action="" class="check">
+                  <input class="check" type="radio" id="visa" name="" value="">
+                  <label class="check" for=""> Visa</label>
+                  <input  class="check" type="radio" id="master" name="" value="">
+                  <label class="check" for=""> Master</label>
+                  <input  class="check" type="radio" id="american" name="" value="">
+                  <label class="check" for=""> American</label>
+                </form>
+                <div class="form-group">
+                    <label></label>
+                    <input type="tel" id="numeroTarjeta" class="form-control " placeholder="Tarjeta de crédito nº" >
+                </div>
+                <button id="btn__pago"  class="btn btn-dark">Pagar</button>
+            </div>
+        
+
+        
+       
 
 
 
     </section>
   </main>
 
-  
+  <!--sweet alert-->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script src="./js/ui.js"></script>
   <script src="./js/base.js"></script>
   <script src="./js/pago.js"></script>
